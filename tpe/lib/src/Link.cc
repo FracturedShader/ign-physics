@@ -15,6 +15,9 @@
  *
 */
 
+#include <ignition/math/Pose3.hh>
+#include <ignition/math/Vector3.hh>
+
 #include "Collision.hh"
 #include "Link.hh"
 
@@ -39,4 +42,27 @@ Entity &Link::AddCollision()
   const auto[it, success] = this->GetChildren().insert(
     {collisionId, std::make_shared<Collision>(collisionId)});
   return *it->second.get();
+}
+
+//////////////////////////////////////////////////
+void Link::UpdatePose(
+  const double _timeStep,
+  const math::Vector3d _linearVelocity,
+  const math::Vector3d _angularVelocity)
+{
+  // update link's pose
+  math::Pose3d currentPose = this->GetPose();
+  math::Pose3d nextPose(
+    currentPose.Pos() + _linearVelocity * _timeStep,
+    currentPose.Rot().Integrate(_angularVelocity, _timeStep));
+  this->SetPose(nextPose);
+
+  // update collision poses
+  auto &children = this->GetChildren();
+  for (auto it = children.begin(); it != children.end(); ++it)
+  {
+    std::shared_ptr<Collision> collision =
+      std::dynamic_pointer_cast<Collision>(it->second);
+    collision->UpdatePose(_timeStep, _linearVelocity, _angularVelocity);
+  }
 }

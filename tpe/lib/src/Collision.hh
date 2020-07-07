@@ -65,6 +65,15 @@ class IGNITION_PHYSICS_TPELIB_VISIBLE Collision : public Entity
   // Documentation inherited
   public: math::AxisAlignedBox GetBoundingBox(bool _force) override;
 
+  /// \brief Update the pose of the entity
+  /// \param[in] _timeStep current world timestep
+  /// \param[in] _linearVelocity linear velocity
+  /// \param[in] _angularVelocity angular velocity
+  public: virtual void UpdatePose(
+    const double _timeStep,
+    const math::Vector3d _linearVelocity,
+    const math::Vector3d _angularVelocity);
+
   /// \brief Private data pointer class
   private: CollisionPrivate *dataPtr = nullptr;
 };

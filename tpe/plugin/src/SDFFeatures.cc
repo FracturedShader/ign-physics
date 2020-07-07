@@ -153,6 +153,7 @@ Identity SDFFeatures::ConstructSdfCollision(
 {
   // Read sdf params
   const std::string name = _sdfCollision.Name();
+  // const auto pose = _sdfCollision.RawPose();
   const auto geom = _sdfCollision.Geom();
 
   const auto linkInfo = this->ReferenceInterface<LinkInfo>(_linkID);
@@ -163,16 +164,10 @@ Identity SDFFeatures::ConstructSdfCollision(
     return this->GenerateInvalidId();
   }
 
-  // compute collision pose based on offset
-  const Eigen::Isometry3d collisionTf =
-    math::eigen3::convert(link->GetPose()) * ResolvedSdfPose(_sdfCollision.SemanticPose());
-  math::Pose3d pose = math::eigen3::convert(collisionTf);
-
   // construct collision
   tpelib::Entity &ent = link->AddCollision();
   tpelib::Collision *collision = static_cast<tpelib::Collision *>(&ent);
   collision->SetName(name);
-  collision->SetPose(pose);
   if (geom->Type() == ::sdf::GeometryType::BOX)
   {
     const auto boxSdf = geom->BoxShape();
@@ -195,6 +190,14 @@ Identity SDFFeatures::ConstructSdfCollision(
     shape.SetRadius(sphereSdf->Radius());
     collision->SetShape(shape);
   }
+
+  // compute collision pose based on offset
+  const Eigen::Isometry3d collisionTf =
+    math::eigen3::convert(link->GetPose()) * ResolveSdfPose(_sdfCollision.SemanticPose());
+  math::Pose3d pose = math::eigen3::convert(collisionTf);
+
+  collision->SetPose(pose);
+
   // \todo(anyone) add mesh. currently mesh has to be loaded externally
   // and passed in as argument as there is no logic for searching resources
   // in ign-physics

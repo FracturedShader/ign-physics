@@ -128,7 +128,7 @@ TEST(SDFFeatures_TEST, CheckTpeData)
     ASSERT_NE(ignition::physics::tpelib::Entity::kNullEntity.GetId(),
         link.GetId());
     EXPECT_EQ("base", link.GetName());
-    EXPECT_EQ(ignition::math::Pose3d::Zero, link.GetPose());
+    EXPECT_EQ(ignition::math::Pose3d(1, 0, 0, 0, 0, 0), link.GetPose());
     EXPECT_EQ(2u, link.GetChildCount());
 
     ignition::physics::tpelib::Entity &collision =
@@ -136,14 +136,14 @@ TEST(SDFFeatures_TEST, CheckTpeData)
     ASSERT_NE(ignition::physics::tpelib::Entity::kNullEntity.GetId(),
         collision.GetId());
     EXPECT_EQ("col_plate_on_ground", collision.GetName());
-    EXPECT_EQ(ignition::math::Pose3d(0, 0, 0.01, 0, 0, 0), collision.GetPose());
+    EXPECT_EQ(ignition::math::Pose3d(1, 0, 0.01, 0, 0, 0), collision.GetPose());
 
     ignition::physics::tpelib::Entity &collision02 =
         link.GetChildByName("col_pole");
     ASSERT_NE(ignition::physics::tpelib::Entity::kNullEntity.GetId(),
         collision.GetId());
     EXPECT_EQ("col_pole", collision02.GetName());
-    EXPECT_EQ(ignition::math::Pose3d(-0.275, 0, 1.1, 0, 0, 0),
+    EXPECT_EQ(ignition::math::Pose3d(0.725, 0, 1.1, 0, 0, 0),
         collision02.GetPose());
 
     ignition::physics::tpelib::Entity &link02 =
@@ -152,7 +152,7 @@ TEST(SDFFeatures_TEST, CheckTpeData)
         link02.GetId());
     EXPECT_EQ("upper_link", link02.GetName());
     EXPECT_EQ(
-        ignition::math::Pose3d(0, 0, 2.1, -1.5708, 0, 0),
+        ignition::math::Pose3d(1, 0, 2.1, -1.5, 0, 0),
         link02.GetPose());
     EXPECT_EQ(3u, link02.GetChildCount());
 
@@ -161,7 +161,7 @@ TEST(SDFFeatures_TEST, CheckTpeData)
     ASSERT_NE(ignition::physics::tpelib::Entity::kNullEntity.GetId(),
         collision03.GetId());
     EXPECT_EQ("col_upper_joint", collision03.GetName());
-    EXPECT_EQ(ignition::math::Pose3d(-0.05, 0, 0, 0, 1.5708, 0),
+    EXPECT_EQ(ignition::math::Pose3d(0.95, 0, 2.1, -1.5, 1.5, 0),
         collision03.GetPose());
 
     ignition::physics::tpelib::Entity &collision04 =
@@ -169,7 +169,7 @@ TEST(SDFFeatures_TEST, CheckTpeData)
     ASSERT_NE(ignition::physics::tpelib::Entity::kNullEntity.GetId(),
         collision04.GetId());
     EXPECT_EQ("col_lower_joint", collision04.GetName());
-    EXPECT_EQ(ignition::math::Pose3d(0, 0, 1.0, 0, 1.5708, 0),
+    EXPECT_EQ(ignition::math::Pose3d(1, 0, 2.1, -1.5, 1.5, 0),
         collision04.GetPose());
 
     ignition::physics::tpelib::Entity &collision05 =
@@ -177,7 +177,7 @@ TEST(SDFFeatures_TEST, CheckTpeData)
     ASSERT_NE(ignition::physics::tpelib::Entity::kNullEntity.GetId(),
         collision05.GetId());
     EXPECT_EQ("col_cylinder", collision05.GetName());
-    EXPECT_EQ(ignition::math::Pose3d(0, 0, 0.5, 0, 0, 0),
+    EXPECT_EQ(ignition::math::Pose3d(1, 0, 2.6, -1.5, 0, 0),
         collision05.GetPose());
 
     ignition::physics::tpelib::Entity &link03 =
@@ -185,7 +185,7 @@ TEST(SDFFeatures_TEST, CheckTpeData)
     ASSERT_NE(ignition::physics::tpelib::Entity::kNullEntity.GetId(),
         link03.GetId());
     EXPECT_EQ("lower_link", link03.GetName());
-    EXPECT_EQ(ignition::math::Pose3d(0.25, 1.0, 2.1, -2, 0, 0),
+    EXPECT_EQ(ignition::math::Pose3d(1.25, 1.0, 2.1, -2, 0, 0),
         link03.GetPose());
     EXPECT_EQ(2u, link03.GetChildCount());
 
@@ -194,7 +194,7 @@ TEST(SDFFeatures_TEST, CheckTpeData)
     ASSERT_NE(ignition::physics::tpelib::Entity::kNullEntity.GetId(),
         collision06.GetId());
     EXPECT_EQ("col_lower_joint", collision06.GetName());
-    EXPECT_EQ(ignition::math::Pose3d(0, 0, 0, 0, 1.5708, 0),
+    EXPECT_EQ(ignition::math::Pose3d(1.25, 1.0, 2.1, -2, 1.5, 0),
         collision06.GetPose());
 
     ignition::physics::tpelib::Entity &collision07 =
@@ -202,7 +202,7 @@ TEST(SDFFeatures_TEST, CheckTpeData)
     ASSERT_NE(ignition::physics::tpelib::Entity::kNullEntity.GetId(),
         collision07.GetId());
     EXPECT_EQ("col_cylinder", collision07.GetName());
-    EXPECT_EQ(ignition::math::Pose3d(0, 0, 0.5, 0, 0, 0),
+    EXPECT_EQ(ignition::math::Pose3d(1.25, 1.0, 2.6, 0, 0, 0),
         collision07.GetPose());
   }
 
@@ -220,7 +220,7 @@ TEST(SDFFeatures_TEST, CheckTpeData)
     ASSERT_NE(ignition::physics::tpelib::Entity::kNullEntity.GetId(),
         link.GetId());
     EXPECT_EQ("link", link.GetName());
-    EXPECT_EQ(ignition::math::Pose3d::Zero, link.GetPose());
+    EXPECT_EQ(ignition::math::Pose3d(0, 10, 10, 0, 0, 0), link.GetPose());
     EXPECT_EQ(0u, link.GetChildCount());
   }
 
@@ -238,14 +238,14 @@ TEST(SDFFeatures_TEST, CheckTpeData)
     ASSERT_NE(ignition::physics::tpelib::Entity::kNullEntity.GetId(),
         link.GetId());
     EXPECT_EQ("base", link.GetName());
-    EXPECT_EQ(ignition::math::Pose3d::Zero, link.GetPose());
+    EXPECT_EQ(ignition::math::Pose3d(10, 0, 2, 0, 0, 0), link.GetPose());
     EXPECT_EQ(0u, link.GetChildCount());
 
     ignition::physics::tpelib::Entity &link02 = model.GetChildByName("bar");
     ASSERT_NE(ignition::physics::tpelib::Entity::kNullEntity.GetId(),
         link02.GetId());
     EXPECT_EQ("bar", link02.GetName());
-    EXPECT_EQ(ignition::math::Pose3d(1, 0, 0, 0, 0, 0), link02.GetPose());
+    EXPECT_EQ(ignition::math::Pose3d(11, 0, 2, 0, 0, 0), link02.GetPose());
     EXPECT_EQ(0u, link02.GetChildCount());
   }
 

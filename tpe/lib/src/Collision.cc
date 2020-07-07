@@ -107,3 +107,16 @@ math::AxisAlignedBox Collision::GetBoundingBox(bool /*_force*/) // NOLINT
     return this->dataPtr->shape->GetBoundingBox();
   return math::AxisAlignedBox();
 }
+
+//////////////////////////////////////////////////
+void Collision::UpdatePose(
+  const double _timeStep,
+  const math::Vector3d _linearVelocity,
+  const math::Vector3d _angularVelocity)
+{
+  math::Pose3d currentPose = this->GetPose();
+  math::Pose3d nextPose(
+    currentPose.Pos() + _linearVelocity * _timeStep,
+    currentPose.Rot().Integrate(_angularVelocity, _timeStep));
+  this->SetPose(nextPose);
+}

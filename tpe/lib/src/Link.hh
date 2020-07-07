@@ -42,6 +42,15 @@ class IGNITION_PHYSICS_TPELIB_VISIBLE Link : public Entity
   /// \brief Add a collision
   /// \return Newly created Collision
   public: Entity &AddCollision();
+
+  /// \brief Update the pose of the entity
+  /// \param[in] _timeStep current world timestep
+  /// \param[in] _linearVelocity linear velocity
+  /// \param[in] _angularVelocity angular velocity
+  public: virtual void UpdatePose(
+    const double _timeStep,
+    const math::Vector3d _linearVelocity,
+    const math::Vector3d _angularVelocity);
 };
 
 }
